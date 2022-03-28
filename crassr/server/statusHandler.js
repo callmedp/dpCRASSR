@@ -4,19 +4,22 @@ import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store/index';
 import React from 'react';
-import { renderRoutes } from 'react-router-config';
+import App from '../src/App'
 
-const render = (req, routes) => {
-    const context = { serverRender: true }
-    const appHtml = ReactDOMServer.renderToString(
+const statusHandler = (req, routes) => {
+    const context = {}
+    
+    ReactDOMServer.renderToString(
         < Provider store={store}>
             <StaticRouter location={req.url} context={context}>
-                {renderRoutes(routes)}
+                <App></App>
             </StaticRouter>
         </ Provider>
     );
 
-    return appHtml;
+    console.log("Server Context", context);
+
+    return context.status;
 }
 
-export default render;
+export default statusHandler;

@@ -3,8 +3,11 @@ const express = require('express');
 const PORT = process.env.PORT || 7789;
 const app = express();
 const statusHandler = require('./statusHandler').default;
+const path = require('path')
 
 createIsomorphicEnv()
+
+app.use(express.static('build'))
 
 app.get('*', (req, res) => {
 
@@ -16,7 +19,7 @@ app.get('*', (req, res) => {
     else
         res.status(200)
    
-    res.send("Server Rendered")
+    res.sendFile(path.join(process.cwd(),'build', 'index.html'));
 })
 
 
